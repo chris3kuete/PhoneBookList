@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='password.css')}}" />
+</head>
+<body>
+
+<div class="navbar">
+    <label class="logo">contactSaver</label>
+    <ul>
+            <li><a class="active" href="{{ url_for('home') }}" class="navbar-brand">Home</a></li>
+            <li><a href="{{ url_for('contactpage') }}" class="navbar-item">Add Contact</a></li>
+            <li><a href="{{ url_for('showAll') }}" class="navbar-item">Show Contacts</a></li>
+
+        </ul>
+
+
+        </div>
+
+        <div class="body-content">
+            {% block content %}
+            {% endblock %}
+            <br>
+            <br>
+            <hr/>
+            <br>
+            <br>
+            <footer class="pass-lay">
+                <p><img src="{{ url_for('static', filename='contact1.jpg')}}" width="200" height="220">&copy; 2023</p>
+            </footer>
+        </div>
+
+
+</body>
+</html>

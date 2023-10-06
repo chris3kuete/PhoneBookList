@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='password.css')}}" />
+</head>
+<body>
+
+{% extends "layout.html" %}
+{% block title %}
+Contact List
+{% endblock %}
+{% block content %}
+        <table border="1px">
+            <thead>
+                <td><strong>Id</strong></td>
+                <td><strong>Name</strong></td>
+                <td><strong>Number</strong></td>
+                <td><strong>Date</strong></td>
+            </thead>
+
+            {% for row in profiles %}
+            <tr>
+                <td>{{ row["id"] }}</td>
+                <td>{{ row["name"] }}</td>
+                <td> {{ row["number"]}}</td>
+                  <td> {{ row["date_saved"]}}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='password.css')}}" />
+</head>
+<body>
+
+{% extends "layout.html" %}
+{% block title %}
+Generate New Password
+{% endblock %}
+{% block content %}
+
+<form class="pass-add" action="{{ url_for('addcontact') }}" method="POST">
+      <label>Name</label>
+      <input type="text" name="name" />
+      <label><span>Phone Number</span></label>
+      <input type="text" name="number" />
+      <button type="submit">Save</button>
+     </form>
+{% endblock %}
+
+</body>
+</html>
