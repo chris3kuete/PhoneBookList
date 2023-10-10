@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, jsonify
 import sqlite3
 from flask import Flask
 from flask_migrate import Migrate
@@ -32,6 +32,21 @@ class list_tbl(db.Model):
 
     print("created chris table successfully")
 
+    def to_dict(self):
+        # Method 1.
+        dictionary = {}
+        # Loop through each column in the data record
+        for column in self.__table__.columns:
+            # Create a new dictionary entry;
+            # where the key is the name of the column
+            # and the value is the value of the column
+            dictionary[column.name] = getattr(self, column.name)
+        return dictionary
+
+        # Method 2. Alternatively use Dictionary Comprehension to do the same thing.
+        # return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
+
 
 # Create table schema in the database. Requires application context.
 with app.app_context():
@@ -46,6 +61,10 @@ def home():
 @app.route("/contactpage")
 def contactpage():
     return render_template("add.html")
+
+@app.route("/finderpage")
+def finderpage():
+    return render_template("entername.html")
 
 
 @app.route("/addcontact", methods=['POST'])
@@ -72,6 +91,20 @@ def index():
 def showAll():
     profiles = list_tbl.query.all()
     return render_template("table.html", profiles=profiles)
+
+@app.route("/search_contact", methods=["GET"])
+def search_contact():
+    query_num = request.args.get("name")
+    result2 = db.session.execute(db.select(list_tbl).where(list_tbl.name == query_num))
+    print(result2)
+    all_num = result2.scalars().all()
+    print(all_num)
+    if all_num:
+        return render_template("result1.html", all_num=all_num)
+        #return jsonify(num1=[n.to_dict() for n in all_num])
+    else:
+        return "Sorry! This number is not in your phone book"
+        #return jsonify(error={"NOT FOUND": "SORRY MISTER!!"}), 404
 
 
 if __name__ == "__main__":

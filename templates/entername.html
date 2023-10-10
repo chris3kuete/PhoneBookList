@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Find A Number</title>
 
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='password.css')}}" />
 </head>
@@ -10,13 +10,17 @@
 
 {% extends "layout.html" %}
 {% block title %}
-Phone Number Book Flask App with CRUD
+Generate New Password
 {% endblock %}
 {% block content %}
-<h1 class="pass-ho">Welcome to my Phone Number Book App!</h1>
-<br>
-<br>
+
+<form class="pass-add" action="{{ url_for('search_contact') }}" method="GET">
+      <label>Name</label>
+      <input type="text" name="name" />
+      <button type="submit">Find Number</button>
+     </form>
 {% endblock %}
+
 
 </body>
 </html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find a Number Result</title>
+</head>
+<body>
+
+{% extends "layout.html" %}
+{% block title %}
+Get the result
+{% endblock %}
+{% block content %}
+<h1>Find Number :</h1>
+    {% for num2 in all_num %}
+      <p>His number is {{num2.number}}</p>
+    {% endfor %}
+{% endblock %}
+
+
+</body>
+</html>
