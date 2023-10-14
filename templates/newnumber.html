@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='password.css')}}" />
+</head>
+<body>
+
+{% extends "layout.html" %}
+{% block title %}
+Enter New Number
+{% endblock %}
+{% block content %}
+
+<form class="pass-add" action="{{ url_for('updateNumber',id=row.id)}}" method="POST">
+      <label><span>Phone Number</span></label>
+      <input type="text" name="number"  />
+      <button type="submit">Change</button>
+
+
+     </form>
+{% endblock %}
+
+
+</body>
+</html>

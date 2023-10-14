@@ -26,7 +26,11 @@ Contact List
                 <td>{{ row["id"] }}</td>
                 <td>{{ row["name"] }}</td>
                 <td> {{ row["number"]}}</td>
-                  <td> {{ row["date_saved"]}}</td>
+                <td> {{ row["date_saved"]}}</td>
+                <td><li><a href="{{ url_for('updateNumber', id=row.id)}}" class="navbar-item">Change</a></li></td>
+                <td><li><a href="{{ url_for('deleteNumber', id=row.id)}}" class="navbar-item">Delete</a></li></td>
+
+
             </tr>
             {% endfor %}
 

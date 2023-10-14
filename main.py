@@ -6,6 +6,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 import os
 import datetime
+
 app = Flask(__name__)
 
 contacts = []
@@ -47,7 +48,6 @@ class list_tbl(db.Model):
         # return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 
-
 # Create table schema in the database. Requires application context.
 with app.app_context():
     db.create_all()
@@ -61,6 +61,7 @@ def home():
 @app.route("/contactpage")
 def contactpage():
     return render_template("add.html")
+
 
 @app.route("/finderpage")
 def finderpage():
@@ -92,6 +93,7 @@ def showAll():
     profiles = list_tbl.query.all()
     return render_template("table.html", profiles=profiles)
 
+
 @app.route("/search_contact", methods=["GET"])
 def search_contact():
     query_num = request.args.get("name")
@@ -101,10 +103,48 @@ def search_contact():
     print(all_num)
     if all_num:
         return render_template("result1.html", all_num=all_num)
-        #return jsonify(num1=[n.to_dict() for n in all_num])
+        # return jsonify(num1=[n.to_dict() for n in all_num])
     else:
         return "Sorry! This number is not in your phone book"
-        #return jsonify(error={"NOT FOUND": "SORRY MISTER!!"}), 404
+        # return jsonify(error={"NOT FOUND": "SORRY MISTER!!"}), 404
+
+
+@app.route("/enterNew/")
+def enterNew():
+    return render_template("newnumber.html")
+
+
+@app.route("/updateNumber/<int:id>", methods=["POST", "GET"])
+def updateNumber(id):
+    if request.method == "POST":
+        num_to_update = db.get_or_404(list_tbl, id)
+        num_to_update.number = request.form["number"]
+        db.session.commit()
+        return redirect(url_for('showAll'))
+    num = db.get_or_404(list_tbl, id)
+    return render_template("newnumber.html", row=num)
+
+    # new_num = request.args.get("new_num")
+    # new_num1 = db.get_or_404(list_tbl, id)
+    # if new_num1:
+    # new_num1.number = new_num
+    # new_num2 = new_num1.number
+    # db.session.commit()
+    # return render_template("newnumber.html", num3=new_num2)
+    # else:
+    # return "ERROR"
+
+
+@app.route("/deleteNumber/<int:id>", methods=["POST", "GET"])
+def deleteNumber(id):
+    name_to_delete = db.get_or_404(list_tbl, id)
+    try:
+        db.session.delete(name_to_delete)
+        db.session.commit()
+        return redirect(url_for('showAll'))
+    except:
+
+        return "There was an error deleting the record"
 
 
 if __name__ == "__main__":
